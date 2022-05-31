@@ -1,4 +1,7 @@
 import fetch from 'node-fetch';
+import joplin from "../../../api";
+const fs = joplin.require('fs-extra')
+
 
 class CodiMDLib {
     cookie: string;
@@ -48,6 +51,30 @@ class CodiMDLib {
         }
 
         return !!this.cookie;
+    }
+
+    async uploadImage(image_file_path) {
+        if (!await this.loginCheck()) {
+            return;
+        }
+
+        const form = new FormData();
+        const fileData = fs.readFileSync(image_file_path);
+        form.append('image', new Blob(fileData), image_file_path.substr(image_file_path.lastIndexOf('/') + 1));
+        const response = await fetch(`${this.server}/uploadimage`, {
+            method: 'POST',
+            headers: {
+                'Cookie': this.cookie
+            },
+            body: form
+        });
+
+        if (response.status === 200) {
+            const resJson = await response.json();
+            return resJson.link;
+        } else {
+            console.log('Failed to upload image', image_file_path, 'with status', response.status);
+        }
     }
 
     async new(title, markdownText) {

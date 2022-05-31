@@ -34,11 +34,25 @@ joplin.plugins.register({
 				let remoteUrl = codiMDLib.server;
 				if (currNote) {
 					const infos = extractInfo(currNote.source_url);
+					let newBody = currNote.body;
+					const r = /!\[.*\]\(\s*(:\/\S+)\s*\)/gm;
+					let match;
+					while ((match = r.exec(newBody)) !== null) {
+						const joplinImageId = match[1];
+						const filePath = await joplin.data.resourcePath(joplinImageId.substr(2));
+						if (filePath) {
+							const uploadImagePath = await codiMDLib.uploadImage(filePath);
+							if (uploadImagePath) {
+								newBody.replaceAll(joplinImageId, uploadImagePath);
+							}
+						}
+					}
+
 					if (SOURCE_URL_CODIMD_PREFIX in infos) {
-						await codiMDLib.updateNote(infos[SOURCE_URL_CODIMD_PREFIX], currNote.title, currNote.body);
+						await codiMDLib.updateNote(infos[SOURCE_URL_CODIMD_PREFIX], currNote.title, newBody);
 						remoteUrl += `/${infos[SOURCE_URL_CODIMD_PREFIX]}`;
 					} else {
-						const codiMdId = await codiMDLib.new(currNote.title, currNote.body);
+						const codiMdId = await codiMDLib.new(currNote.title, newBody);
 						if (codiMdId) {
 							const new_source_url = updateInfo(currNote.source_url, SOURCE_URL_CODIMD_PREFIX, codiMdId);
 							await joplin.data.put(['notes', currNote.id], null, {source_url: new_source_url});
