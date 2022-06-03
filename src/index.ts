@@ -9,7 +9,7 @@ import {
 	updateInfo
 } from "./common";
 import {codiMDLib} from "./lib/CodiMD/CodiMDLib";
-import {ToolbarButtonLocation} from "../api/types";
+import {ContentScriptType, ToolbarButtonLocation} from "../api/types";
 
 joplin.plugins.register({
 	onStart: async function() {
@@ -83,6 +83,12 @@ joplin.plugins.register({
 			'CodiMDSyncBack',
 			'CodiMD_Sync_Back',
 			ToolbarButtonLocation.NoteToolbar
+		);
+
+		await joplin.contentScripts.register(
+			ContentScriptType.MarkdownItPlugin,
+			'codimd_style_renderer',
+			'./driver/markdownItRenderer/admonition/index.js'
 		);
 	},
 });

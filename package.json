@@ -29,9 +29,8 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "form-data": "^4.0.0",
-    "get-file-object-from-local-path": "^1.0.2",
     "html-entities": "^2.3.3",
+    "markdown-it-admonition": "^1.0.4",
     "net": "^1.0.2",
     "node-fetch": "^2.6.7",
     "reconnecting-websocket": "^4.4.0",
