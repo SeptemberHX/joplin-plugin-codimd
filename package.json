@@ -14,6 +14,8 @@
     "publish"
   ],
   "devDependencies": {
+    "@types/codemirror": "^5.60.5",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^14.0.14",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^6.1.0",
@@ -29,7 +31,10 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
+    "codemirror-widgets": "^1.4.2",
     "html-entities": "^2.3.3",
+    "katex": "^0.15.6",
+    "lodash": "^4.17.21",
     "markdown-it-admonition": "^1.0.4",
     "net": "^1.0.2",
     "node-fetch": "^2.6.7",

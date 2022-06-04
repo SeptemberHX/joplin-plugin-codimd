@@ -90,5 +90,11 @@ joplin.plugins.register({
 			'codimd_style_renderer',
 			'./driver/markdownItRenderer/admonition/index.js'
 		);
+
+		await joplin.contentScripts.register(
+			ContentScriptType.CodeMirrorPlugin,
+			'codimd_math',
+			'./driver/codemirror/math/index.js'
+		);
 	},
 });

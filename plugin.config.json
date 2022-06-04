@@ -1,5 +1,6 @@
 {
 	"extraScripts": [
-		"driver/markdownItRenderer/admonition/index.ts"
+		"driver/markdownItRenderer/admonition/index.ts",
+		"driver/codemirror/math/index.ts"
 	]
 }
